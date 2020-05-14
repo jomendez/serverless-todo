@@ -4,7 +4,7 @@ import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
 import { deleteTodo } from '../../business-logic/todos-crud'
 
-const responseHeader = { 'Access-Control-Allow-Origin': '*' }
+const accessControlAllowOrigin = { 'Access-Control-Allow-Origin': '*' }
 
 const deleteTodoLogger = createLogger('deleteTodo')
 
@@ -20,7 +20,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: 400,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error: message })
     }
   }
@@ -40,14 +40,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: error.statusCode || 501,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error })
     }
   }
 
   return {
     statusCode: 200,
-    headers: responseHeader,
+    headers: accessControlAllowOrigin,
     body: JSON.stringify({})
   }
 }

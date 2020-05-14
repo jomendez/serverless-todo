@@ -1,7 +1,7 @@
 import 'source-map-support/register'
 import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } from 'aws-lambda'
 
-const responseHeader = { 'Access-Control-Allow-Origin': '*' }
+const accessControlAllowOrigin = { 'Access-Control-Allow-Origin': '*' }
 
 import { getUserId } from '../utils'
 import { createLogger } from '../../utils/logger'
@@ -27,14 +27,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: 500,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error })
     }
   }
 
   return {
     statusCode: 200,
-    headers: responseHeader,
+    headers: accessControlAllowOrigin,
     body: JSON.stringify({ items: todos })
   }
 }

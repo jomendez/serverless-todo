@@ -6,7 +6,7 @@ import { createLogger } from '../../utils/logger'
 import { createTodo } from '../../business-logic/todos-crud'
 
 const createTodoLogger = createLogger('createTodoLambda')
-const responseHeader = { 'Access-Control-Allow-Origin': '*' }
+const accessControlAllowOrigin = { 'Access-Control-Allow-Origin': '*' }
 
 export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEvent): Promise<APIGatewayProxyResult> => {
   createTodoLogger.info('Processing event', { event })
@@ -27,14 +27,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: error.statusCode || 500,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error })
     }
   }
 
   return {
     statusCode: 201,
-    headers: responseHeader,
+    headers: accessControlAllowOrigin,
     body: JSON.stringify({ item: todoItem })
   }
 }

@@ -3,7 +3,7 @@ import { APIGatewayProxyEvent, APIGatewayProxyResult, APIGatewayProxyHandler } f
 import { createLogger } from '../../utils/logger'
 import { generateTodoUploadUrl } from '../../business-logic/todos-crud'
 
-const responseHeader = { 'Access-Control-Allow-Origin': '*' }
+const accessControlAllowOrigin = { 'Access-Control-Allow-Origin': '*' }
 
 const generateUploadUrlLogger = createLogger('generateUploadUrl')
 
@@ -19,7 +19,7 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: 400,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error: 'Missing item Id' })
     }
   }
@@ -33,14 +33,14 @@ export const handler: APIGatewayProxyHandler = async (event: APIGatewayProxyEven
 
     return {
       statusCode: 500,
-      headers: responseHeader,
+      headers: accessControlAllowOrigin,
       body: JSON.stringify({ error })
     }
   }
 
   return {
     statusCode: 200,
-    headers: responseHeader,
+    headers: accessControlAllowOrigin,
     body: JSON.stringify({ uploadUrl })
   }
 }
