@@ -118,6 +118,10 @@ npm run start
 
 This should start a development server with the React application that will interact with the serverless TODO application.
 
+# Remove serverless App
+
+`serverless remove --stage dev --region us-east-1`
+
 # Postman collection
 
 An alternative way to test your API you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection do the following.
