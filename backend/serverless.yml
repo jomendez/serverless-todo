@@ -1,5 +1,5 @@
 service:
-  name: serverless-todo-app-jomendez
+  name: serverless-todo-app
 
 plugins:
   - serverless-webpack
@@ -15,11 +15,11 @@ provider:
   region: ${opt:region, 'us-east-1'}
 
   environment:
+    AUTH_0_JSON_WEB_KEY_SET: https://dev-bqo5cyuc.auth0.com/.well-known/jwks.json
+    TODOS_TABLE: jomendez-todos-${self:provider.stage}
+    TODOS_FILES_S3_BUCKET: jomendez-todos-attachments-${self:provider.stage}
     TODOS_ID_INDEX: TodosIdIndex
     SIGNED_URL_EXPIRATION: 300
-    AUTH_0_JSON_WEB_KEY_SET: https://dev-bqo5cyuc.auth0.com/.well-known/jwks.json
-    TODOS_FILES_S3_BUCKET: jomendez-todos-files-${self:provider.stage}
-    TODOS_TABLE: jomendez-TODOs-${self:provider.stage}
     REGION: ${self:provider.region}
 custom:
   documentation:
@@ -150,7 +150,7 @@ resources:
           Ref: ApiGatewayRestApi
         ValidateRequestBody: true
         ValidateRequestParameters: false
-    todosFilebucket:
+    todos3attachmentsbucket:
       Type: "AWS::S3::Bucket"
       Properties:
         BucketName: ${self:provider.environment.TODOS_FILES_S3_BUCKET}
@@ -178,9 +178,9 @@ resources:
             - Sid: PublicReadForGetBucketObjects
               Effect: Allow
               Principal: '*'
-              Action: s3:GetObject
-              Resource: arn:aws:s3:::${self:provider.environment.TODOS_FILES_S3_BUCKET}/*
-        Bucket: !Ref todosFilebucket
+              Action: 's3:GetObject'
+              Resource: 'arn:aws:s3:::${self:provider.environment.TODOS_FILES_S3_BUCKET}/*'
+        Bucket: !Ref todos3attachmentsbucket
     ToDosDynamoDBTable:
       Type: "AWS::DynamoDB::Table"
       Properties:
